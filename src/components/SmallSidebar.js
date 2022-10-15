@@ -18,7 +18,7 @@ const SmallSidebar = () => {
       <aside className={isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'}>
         <div className='sidebar-content'>
           <button className='btn close-btn'>
-            <MdClose />
+            <MdClose onClick={toggle} />
           </button>
           <NavLinks toggle={toggle} />
           <Logout />
