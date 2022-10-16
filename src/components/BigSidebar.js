@@ -9,11 +9,13 @@ const BigSidebar = () => {
   return (
     <Wrapper>
       <div className={!isSidebarOpen ? 'big-sidebar show' : 'big-sidebar'}>
-        <header>
-          <h4>Logo</h4>
-        </header>
-        <NavLinks />
-        <Logout />
+        <div className='content'>
+          <header>
+            <h4>Logo</h4>
+          </header>
+          <NavLinks />
+          <Logout />
+        </div>
       </div>
     </Wrapper>
   );
@@ -32,15 +34,19 @@ const Wrapper = styled.aside`
       background-color: var(--white);
       margin-left: -250px;
       transition: var(--transition);
+    }
+    .content {
+      position: sticky;
+      top: 0;
+      height: 100vh;
       display: grid;
       grid-template-rows: auto 1fr auto;
-
-      header {
-        height: 6rem;
-        display: flex;
-        align-items: center;
-        padding: 0 2rem;
-      }
+    }
+    header {
+      height: 6rem;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
     }
     .show {
       margin-left: 0;

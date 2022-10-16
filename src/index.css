@@ -160,29 +160,13 @@ ul {
   background: var(--primary-700);
   box-shadow: var(--shadow-3);
 }
-.btn-hipster {
-  color: var(--primary-500);
-  background: var(--primary-200);
+.red-btn {
+  background-color: #e75f6a;
 }
-.btn-hipster:hover {
-  color: var(--primary-200);
-  background: var(--primary-700);
+.red-btn:hover {
+  background-color: #842029;
 }
-.btn-block {
-  width: 100%;
-}
-.btn-hero {
-  font-size: 1.25rem;
-  padding: 0.5rem 1.25rem;
-}
-.btn-danger {
-  background: var(--red-light);
-  color: var(--red-dark);
-}
-.btn-danger:hover {
-  background: var(--red-dark);
-  color: var(--white);
-}
+
 /* 
  FORM 
  */
@@ -228,4 +212,13 @@ select {
 
 .Toastify__toast {
   text-transform: capitalize;
+}
+
+/* BORDER */
+
+.border-green {
+  border-top: 5px solid var(--green-dark);
+}
+.border-red {
+  border-top: 5px solid var(--red-dark);
 }

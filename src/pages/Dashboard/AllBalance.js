@@ -1,18 +1,25 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { toggleSidebar } from '../../redux/features/UI/uiSlice';
-
+import { Balances, BalanceView, Filters } from '../../components';
+import styled from 'styled-components';
 const AllBalance = () => {
-  const dispatch = useDispatch();
-
   return (
-    <div>
-      AllBalance
-      <button className='btn' onClick={() => dispatch(toggleSidebar())}>
-        toggle
-      </button>
-    </div>
+    <Wrapper>
+      <Filters />
+      <div>
+        <BalanceView />
+        <Balances />
+      </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.section`
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  @media (min-width: 992px) {
+    grid-template-columns: 200px 1fr;
+  }
+`;
 
 export default AllBalance;

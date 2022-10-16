@@ -56,7 +56,7 @@ const AddBalance = () => {
           />
           <button
             type='button'
-            className='btn btn-block clear-btn'
+            className='btn btn-block red-btn'
             onClick={() => dispatch(clearValues())}
           >
             reset
@@ -80,12 +80,7 @@ const Wrapper = styled.section`
     width: 100%;
     margin-bottom: 1rem;
   }
-  .clear-btn {
-    background-color: #e75f6a;
-  }
-  .clear-btn:hover {
-    background-color: #842029;
-  }
+
   @media (min-width: 800px) {
     .btn-block {
       margin-bottom: 0;

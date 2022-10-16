@@ -43,6 +43,7 @@ const Wrapper = styled.nav`
   .toggle-btn {
     background-color: transparent;
     box-shadow: none;
+    padding: 0;
     color: var(--primary-500);
     svg {
       font-size: 2rem;
