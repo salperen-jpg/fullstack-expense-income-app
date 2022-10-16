@@ -101,10 +101,23 @@ const Wrapper = styled.section`
     padding: 1.5rem 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    color: var(--grey-500);
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      svg {
+        font-size: 1.3rem;
+      }
+    }
   }
   footer {
     padding: 1.5rem 1rem;
+    p {
+      color: var(--grey-500);
+    }
   }
+
   .btn-container {
     display: flex;
     gap: 1rem;
