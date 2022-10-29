@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
 
+import 'express-async-errors';
 import connectDB from './db/connect.js';
 // MIDDLEWARE IMPORTS
 import notFound from './middleware/not-found.js';

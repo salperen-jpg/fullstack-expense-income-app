@@ -1,22 +1,29 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 // name,email,password
-const user = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Name can not be empty.'],
     trim: true,
-    maxLength: [20, 'Can not be longer than 20.'],
+    minLength: 2,
+    maxLength: 20,
   },
   email: {
     type: String,
-    required: [true, 'Email can not be empty.'],
+    required: [true, 'Please provide an email.'],
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide an email.',
+    },
     trim: true,
-    maxLength: [40, 'Can not be longer than 40.'],
+    unique: true,
   },
   password: {
     type: String,
     required: [true, 'Name can not be empty.'],
-    trim: true,
-    maxLength: [20, 'Can not be longer than 20.'],
+    minLength: 6,
   },
 });
+
+export default mongoose.model('user', UserSchema);
