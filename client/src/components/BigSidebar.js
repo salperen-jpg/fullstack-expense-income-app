@@ -6,6 +6,7 @@ import Logout from './Logout';
 
 const BigSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.ui);
+
   return (
     <Wrapper>
       <div className={!isSidebarOpen ? 'big-sidebar show' : 'big-sidebar'}>

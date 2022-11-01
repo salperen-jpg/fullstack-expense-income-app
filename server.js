@@ -18,7 +18,13 @@ import balanceRouter from './routes/balanceRoutes.js';
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to server');
+  return res.json({ msg: 'Welcome to server' });
+});
+app.get('/api/v1', (req, res) => {
+  return res.json({ msg: 'Welcome ' });
+});
+app.get('/api/v1/v4', (req, res) => {
+  return res.json({ msg: 'Welcome v4 ' });
 });
 
 app.use('/api/v1/auth', authRouter);

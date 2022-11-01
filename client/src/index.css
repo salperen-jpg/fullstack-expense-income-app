@@ -183,6 +183,11 @@ ul {
   align-items: flex-end;
 }
 
+.form-row {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+}
 @media screen and (min-width: 800px) {
   .form-row {
     margin: 0;
@@ -198,11 +203,6 @@ ul {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-.form-row {
-  width: 100%;
-  display: block;
-  margin-bottom: 1rem;
-}
 .form label {
   font-size: 0.8rem;
   display: block;
@@ -211,6 +211,8 @@ ul {
   color: var(--grey-600);
 }
 .form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
 .form input[type='number'],
 select {
   width: 100%;

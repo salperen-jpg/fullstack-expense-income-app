@@ -1,6 +1,7 @@
 import React from 'react';
 import landingImg from '../assets/saving.svg';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <Wrapper>
@@ -18,7 +19,9 @@ const Landing = () => {
             voluptate eius facilis vitae dignissimos excepturi rerum impedit
             odit molestiae aut deserunt!
           </p>
-          <button className='btn'>login/register</button>
+          <Link to='/register' className='btn'>
+            login/register
+          </Link>
         </div>
         <img src={landingImg} alt='img' className='main-img' />
       </div>
