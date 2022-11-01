@@ -6,6 +6,7 @@ const app = express();
 
 import 'express-async-errors';
 import connectDB from './db/connect.js';
+import morgan from 'morgan';
 // MIDDLEWARE IMPORTS
 import notFound from './middleware/not-found.js';
 import errorHandlerMiddleware from './middleware/error-handler.js';
@@ -16,6 +17,10 @@ import balanceRouter from './routes/balanceRoutes.js';
 
 // middleware for json
 app.use(express.json());
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
 
 app.get('/', (req, res) => {
   return res.json({ msg: 'Welcome to server' });

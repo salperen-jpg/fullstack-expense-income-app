@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Row from '../components/Row';
 import money from '../assets/money.jpg';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+
 const Register = () => {
   const [userValues, setUserValues] = useState({
     name: '',
@@ -13,6 +15,8 @@ const Register = () => {
     isMember: true,
   });
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.user);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUserValues({ ...userValues, [e.target.name]: e.target.value });
@@ -38,6 +42,14 @@ const Register = () => {
     dispatch(registerUser({ email, password, name }));
   };
 
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+    }
+  }, [user, navigate]);
+  console.log(typeof user?.token);
   return (
     <Wrapper>
       <div className='banner'></div>
