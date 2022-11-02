@@ -25,6 +25,18 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const loginUser = createAsyncThunk(
+  'user/loginUser',
+  async (user, thunkAPI) => {
+    try {
+      const response = await axios.post('/api/v1/auth/login', user);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.reponse.data.msg);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -41,6 +53,19 @@ const userSlice = createSlice({
     [registerUser.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload);
+    },
+    [loginUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+      toast.success(`Welcome back ${action.payload.name}`);
+      addToLocalStorage(action.payload);
+    },
+    [loginUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      toast.error(action.payload);
     },
   },
 });

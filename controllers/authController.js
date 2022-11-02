@@ -1,6 +1,6 @@
 import User from '../Models/User.js';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequest } from '../errors/index.js';
+import { BadRequest, UnAuthenticated } from '../errors/index.js';
 
 // REGISTER
 const register = async (req, res) => {
@@ -21,7 +21,26 @@ const register = async (req, res) => {
 };
 // LOGIN
 const login = async (req, res) => {
-  res.send('login');
+  const { password, email } = req.body;
+  if (!password || !email) {
+    throw new BadRequest('Please provide all values');
+  }
+
+  const user = await User.findOne({ email }).select('+password');
+
+  if (!user) {
+    throw new UnAuthenticated('Invalid Credentials!!!');
+  }
+
+  const passwordIsMatched = await user.comparePassword(password);
+
+  if (!passwordIsMatched) {
+    throw new UnAuthenticated('Unauthorized!!!');
+  }
+  const token = user.createJWT();
+  res
+    .status(StatusCodes.OK)
+    .json({ user: { name: user.name, email: user.email, token } });
 };
 
 // UPDATE

@@ -4,7 +4,7 @@ import Row from '../components/Row';
 import money from '../assets/money.jpg';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../redux/user/userSlice';
+import { registerUser, loginUser } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -37,7 +37,8 @@ const Register = () => {
       toast.error('Please provide the information');
     }
     if (isMember) {
-      // login
+      dispatch(loginUser({ email, password }));
+      return;
     }
     dispatch(registerUser({ email, password, name }));
   };
@@ -49,7 +50,7 @@ const Register = () => {
       }, 2000);
     }
   }, [user, navigate]);
-  console.log(typeof user?.token);
+
   return (
     <Wrapper>
       <div className='banner'></div>
