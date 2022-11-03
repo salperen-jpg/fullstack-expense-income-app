@@ -4,11 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   MdOutlineFormatAlignCenter,
   MdOutlineSupervisedUserCircle,
+  MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
 import { toggleSidebar } from '../redux/features/UI/uiSlice';
+import { logOut } from '../redux/user/userSlice';
+
 const Navbar = () => {
   const dispatch = useDispatch();
-
+  const { name } = useSelector((store) => store.user.user);
+  const [showDropDown, setShowDropDown] = React.useState(false);
   return (
     <Wrapper>
       <div className='nav-center'>
@@ -19,10 +24,33 @@ const Navbar = () => {
           <MdOutlineFormatAlignCenter />
         </button>
         <h1>LOGO</h1>
-        <button className='btn user-btn'>
-          <MdOutlineSupervisedUserCircle />
-          user
-        </button>
+        <div className='dropdown-container'>
+          <button
+            className='btn user-btn'
+            onClick={() => setShowDropDown(!showDropDown)}
+          >
+            <MdOutlineSupervisedUserCircle />
+            {name}
+            {showDropDown ? (
+              <MdOutlineKeyboardArrowUp />
+            ) : (
+              <MdOutlineKeyboardArrowDown />
+            )}
+          </button>
+          <div
+            className={`${
+              showDropDown ? 'log-out-container showw' : 'log-out-container'
+            }`}
+          >
+            <button
+              type='button'
+              className='logout btn'
+              onClick={() => dispatch(logOut())}
+            >
+              logout
+            </button>
+          </div>
+        </div>
       </div>
     </Wrapper>
   );
@@ -65,6 +93,29 @@ const Wrapper = styled.nav`
       font-size: 1.5rem;
     }
   }
+  .dropdown-container {
+    position: relative;
+  }
+  .log-out-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    transform: translateY(60px);
+    opacity: 0;
+    transition: var(--transition);
+    button {
+      width: 100%;
+      padding: 1rem 1rem;
+      background: var(--primary-200);
+    }
+  }
+  .showw {
+    display: block;
+    opacity: 1;
+  }
+
   @media screen {
     position: sticky;
     top: 0;

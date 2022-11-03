@@ -40,6 +40,13 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  reducers: {
+    logOut: (state) => {
+      state.user = null;
+      toast.success('Logging out...');
+      removeFromLocalStorage();
+    },
+  },
   extraReducers: {
     [registerUser.pending]: (state) => {
       state.isLoading = true;
@@ -57,11 +64,11 @@ const userSlice = createSlice({
     [loginUser.pending]: (state) => {
       state.isLoading = true;
     },
-    [loginUser.fulfilled]: (state, action) => {
+    [loginUser.fulfilled]: (state, { payload: { user } }) => {
       state.isLoading = false;
-      state.user = action.payload;
-      toast.success(`Welcome back ${action.payload.name}`);
-      addToLocalStorage(action.payload);
+      state.user = user;
+      toast.success(`Welcome back ${user.name}`);
+      addToLocalStorage(user);
     },
     [loginUser.rejected]: (state, action) => {
       state.isLoading = false;
@@ -71,3 +78,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { logOut } = userSlice.actions;
