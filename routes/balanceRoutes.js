@@ -7,8 +7,10 @@ import {
   deleteBalance,
   editBalance,
 } from '../controllers/expenseIncomeController.js';
+// auth
+import auth from '../middleware/auth.js';
 
-router.route('/').get(getBalances).post(addBalance);
-router.route('/:id').delete(deleteBalance).patch(editBalance);
+router.route('/').get(auth, getBalances).post(auth, addBalance);
+router.route('/:id').delete(auth, deleteBalance).patch(auth, editBalance);
 
 export default router;

@@ -10,7 +10,7 @@ const Error = () => {
         <h2>
           We don't seem to <br /> find this page
         </h2>
-        <Link to='/' className='btn'>
+        <Link to='/dashboard' className='btn'>
           home
         </Link>
       </div>
