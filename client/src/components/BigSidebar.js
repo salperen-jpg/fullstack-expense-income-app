@@ -26,7 +26,7 @@ const Wrapper = styled.aside`
   display: none;
 
   @media (min-width: 992px) {
-    box-shadow: px 0px 0px 0px rgba(0, 0, 0, 0.8);
+    box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
     display: block;
     .big-sidebar {
       width: 250px;

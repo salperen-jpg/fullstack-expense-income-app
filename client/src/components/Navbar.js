@@ -9,11 +9,13 @@ import {
 } from 'react-icons/md';
 import { toggleSidebar } from '../redux/features/UI/uiSlice';
 import { logOut } from '../redux/user/userSlice';
-
+import UpdateProfile from './UpdateProfile';
 const Navbar = () => {
   const dispatch = useDispatch();
   const { name } = useSelector((store) => store.user.user);
   const [showDropDown, setShowDropDown] = React.useState(false);
+  const [showUpdateProfile, setShowUpdateProfile] = React.useState(false);
+
   return (
     <Wrapper>
       <div className='nav-center'>
@@ -45,6 +47,16 @@ const Navbar = () => {
             <button
               type='button'
               className='logout btn'
+              onClick={() => {
+                setShowUpdateProfile(!showUpdateProfile);
+                setShowDropDown(!showDropDown);
+              }}
+            >
+              Update Profile
+            </button>
+            <button
+              type='button'
+              className='logout btn'
               onClick={() => dispatch(logOut())}
             >
               logout
@@ -52,6 +64,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <UpdateProfile
+        showUpdateProfile={showUpdateProfile}
+        setShowUpdateProfile={setShowUpdateProfile}
+      />
     </Wrapper>
   );
 };
@@ -101,18 +117,21 @@ const Wrapper = styled.nav`
     bottom: 0;
     left: 0;
     width: 100%;
-
-    transform: translateY(60px);
     opacity: 0;
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transform: translateY(123%);
+
     button {
       width: 100%;
       padding: 1rem 1rem;
+
       background: var(--primary-200);
     }
   }
   .showw {
-    display: block;
     opacity: 1;
   }
 

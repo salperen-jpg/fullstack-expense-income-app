@@ -4,10 +4,14 @@ import SectionTitle from '../../components/SectionTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import Row from '../../components/Row';
 import Select from '../../components/Select';
-import { handleValues, clearValues } from '../../redux/balance/balanceSlice';
+import {
+  handleValues,
+  clearValues,
+  createBalance,
+} from '../../redux/balance/balanceSlice';
 import { toast } from 'react-toastify';
 const AddBalance = () => {
-  const { name, amount, description, balanceType } = useSelector(
+  const { name, amount, description, balanceType, isLoading } = useSelector(
     (store) => store.balance
   );
   const dispatch = useDispatch();
@@ -22,7 +26,9 @@ const AddBalance = () => {
     e.preventDefault();
     if (!amount || !name || !description) {
       toast.error('Please fill the values');
+      return;
     }
+    dispatch(createBalance({ name, amount, description, balanceType }));
   };
   return (
     <Wrapper>
@@ -39,6 +45,7 @@ const AddBalance = () => {
             type='number'
             name='amount'
             value={amount}
+            min={0}
             handleChange={handleChange}
           />
           <Select
@@ -65,8 +72,15 @@ const AddBalance = () => {
             type='submit'
             className='btn btn-block submit-btn'
             onClick={handleSubmit}
+            disabled={isLoading}
           >
-            submit
+            {isLoading ? (
+              <div className='loading'>
+                <p className='small-loading'></p>
+              </div>
+            ) : (
+              'Submit'
+            )}
           </button>
         </div>
       </form>
@@ -85,6 +99,32 @@ const Wrapper = styled.section`
     .btn-block {
       margin-bottom: 0;
     }
+  }
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    p {
+      margin: 0;
+    }
+  }
+  .small-loading {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    border-top-color: purple;
+    animation: spinner 0.6s linear infinite;
+  }
+
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  button::disabled {
+    cursor: not-allowed;
   }
 `;
 

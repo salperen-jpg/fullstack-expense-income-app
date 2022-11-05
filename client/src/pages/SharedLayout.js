@@ -10,6 +10,7 @@ const SharedLayout = () => {
         {/* out of flow */}
         <SmallSidebar />
         <BigSidebar />
+
         <div className='dashboard'>
           <Navbar />
           <div className='dash'>

@@ -1,34 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import authFetch from '../../utils/axios';
 
-const someBalance = [
-  {
-    id: 1,
-    name: 'TV',
-    amount: 499.99,
-    typeFilter: 'expense',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati ex at accusantium odio nobis impedit? Nobis assumenda voluptate doloribus voluptatem?',
-  },
-  {
-    id: 2,
-    name: 'Earning',
-    amount: 999.99,
-    typeFilter: 'income',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati ex at accusantium odio nobis impedit? Nobis assumenda voluptate doloribus voluptatem?',
-  },
-  {
-    id: 3,
-    name: 'garbage',
-    amount: 49.87,
-    typeFilter: 'expense',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati ex at accusantium odio nobis impedit? Nobis assumenda voluptate doloribus voluptatem?',
-  },
-];
+export const createBalance = createAsyncThunk(
+  'balance/createBalance',
+  async (balance, thunkAPI) => {
+    try {
+      const response = await authFetch.post('/balances', balance);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 
 const initialState = {
-  allBalances: someBalance,
+  allBalances: [],
   isLoading: false,
   filters: {
     nameFilter: '',
@@ -60,6 +47,19 @@ const balanceSlice = createSlice({
     },
     handleViews: (state) => {
       state.gridView = !state.gridView;
+    },
+  },
+  extraReducers: {
+    [createBalance.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [createBalance.fulfilled]: (state) => {
+      state.isLoading = false;
+      toast.success('Balance created...');
+    },
+    [createBalance.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
     },
   },
 });
