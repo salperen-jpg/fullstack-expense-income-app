@@ -14,9 +14,23 @@ export const createBalance = createAsyncThunk(
   }
 );
 
+export const getAllBalances = createAsyncThunk(
+  'balance/getAllBalances',
+  async (_, thunkAPI) => {
+    try {
+      const response = await authFetch.get('/balances');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const initialState = {
   allBalances: [],
-  isLoading: false,
+  numOfBalances: 0,
+  numOfPages: 0,
+  isLoading: true,
   filters: {
     nameFilter: '',
     min: 0,
@@ -58,6 +72,19 @@ const balanceSlice = createSlice({
       toast.success('Balance created...');
     },
     [createBalance.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+    [getAllBalances.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllBalances.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.allBalances = payload.balances;
+      state.numOfBalances = payload.numOfBalances;
+      state.numOfPages = payload.numOfPages;
+    },
+    [getAllBalances.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload);
     },

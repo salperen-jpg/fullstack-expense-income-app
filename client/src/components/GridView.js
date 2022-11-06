@@ -6,7 +6,7 @@ const GridView = ({ balances }) => {
   return (
     <Wrapper>
       {balances.map((balance) => {
-        return <Balance key={balance.id} {...balance} />;
+        return <Balance key={balance._id} {...balance} />;
       })}
     </Wrapper>
   );

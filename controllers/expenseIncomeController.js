@@ -15,8 +15,16 @@ const addBalance = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ balance });
 };
 
+// GET ALL BALANCES
 const getBalances = async (req, res) => {
-  res.send('Get balance');
+  const { userId } = req.user;
+  const balances = await Balance.find({ createdBy: userId });
+  console.log(balances);
+  res.status(StatusCodes.OK).json({
+    balances,
+    numOfBalances: balances.length,
+    numOfPages: 1,
+  });
 };
 
 const deleteBalance = async (req, res) => {
