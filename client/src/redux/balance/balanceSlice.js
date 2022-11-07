@@ -7,6 +7,7 @@ export const createBalance = createAsyncThunk(
   async (balance, thunkAPI) => {
     try {
       const response = await authFetch.post('/balances', balance);
+      thunkAPI.dispatch(clearValues());
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -19,6 +20,7 @@ export const getAllBalances = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await authFetch.get('/balances');
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -30,7 +32,7 @@ const initialState = {
   allBalances: [],
   numOfBalances: 0,
   numOfPages: 0,
-  isLoading: true,
+  isLoading: false,
   filters: {
     nameFilter: '',
     min: 0,
@@ -43,6 +45,8 @@ const initialState = {
   amount: '',
   description: '',
   balanceType: 'income',
+  isEditing: false,
+  editingId: '',
 };
 
 const balanceSlice = createSlice({
@@ -62,6 +66,19 @@ const balanceSlice = createSlice({
     handleViews: (state) => {
       state.gridView = !state.gridView;
     },
+    setEditBalance: (state, { payload }) => {
+      console.log(payload);
+      const specificBalance = state.allBalances.find(
+        (balance) => balance._id === payload
+      );
+      const { name, amount, description, balanceType } = specificBalance;
+      state.isEditing = true;
+      state.editingId = payload;
+      state.name = name;
+      state.amount = amount;
+      state.description = description;
+      state.balanceType = balanceType;
+    },
   },
   extraReducers: {
     [createBalance.pending]: (state) => {
@@ -70,6 +87,7 @@ const balanceSlice = createSlice({
     [createBalance.fulfilled]: (state) => {
       state.isLoading = false;
       toast.success('Balance created...');
+      clearValues();
     },
     [createBalance.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -90,5 +108,6 @@ const balanceSlice = createSlice({
     },
   },
 });
-export const { handleValues, clearValues, handleViews } = balanceSlice.actions;
+export const { handleValues, clearValues, handleViews, setEditBalance } =
+  balanceSlice.actions;
 export default balanceSlice.reducer;

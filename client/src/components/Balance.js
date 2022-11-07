@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaDollarSign, FaCalendarAlt, FaMinus, FaPlus } from 'react-icons/fa';
 import BalanceIconText from './BalanceIconText';
-const Balance = ({ name, description, id, amount, balanceType }) => {
+import { useDispatch } from 'react-redux';
+import { setEditBalance } from '../redux/balance/balanceSlice';
+import { Link } from 'react-router-dom';
+const Balance = ({ name, description, _id, amount, balanceType }) => {
+  const dispatch = useDispatch();
+
   return (
     <Wrapper
       className={balanceType === 'income' ? 'border-green' : 'border-red'}
@@ -31,7 +36,13 @@ const Balance = ({ name, description, id, amount, balanceType }) => {
         <p className='description'>{description}</p>
       </div>
       <div className='btn-container'>
-        <button className='btn edit-btn'>edit</button>
+        <Link
+          to='/dashboard/add-balance'
+          className='btn edit-btn'
+          onClick={() => dispatch(setEditBalance(_id))}
+        >
+          edit
+        </Link>
         <button className='btn red-btn'>delete</button>
       </div>
     </Wrapper>

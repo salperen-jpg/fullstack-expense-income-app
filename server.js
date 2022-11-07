@@ -31,11 +31,9 @@ if (process.env.NODE_ENV !== 'production') {
 app.get('/', (req, res) => {
   return res.json({ msg: 'Welcome to server' });
 });
+
 app.get('/api/v1', (req, res) => {
   return res.json({ msg: 'Welcome ' });
-});
-app.get('/api/v1/v4', (req, res) => {
-  return res.json({ msg: 'Welcome v4 ' });
 });
 
 app.use('/api/v1/auth', authRouter);
