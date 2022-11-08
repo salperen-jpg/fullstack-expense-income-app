@@ -28,6 +28,33 @@ export const getAllBalances = createAsyncThunk(
   }
 );
 
+export const editBalance = createAsyncThunk(
+  'balance/editBalance',
+  async (balanceInfo, thunkAPI) => {
+    try {
+      const response = await authFetch.patch(
+        `/balances/${thunkAPI.getState().balance.editingId}`,
+        balanceInfo
+      );
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const deleteBalance = createAsyncThunk(
+  'balance/deleteBalance',
+  async (id, thunkAPI) => {
+    try {
+      const response = await authFetch.delete(`/balances/${id}`);
+      thunkAPI.dispatch(getAllBalances());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const initialState = {
   allBalances: [],
   numOfBalances: 0,
@@ -46,7 +73,7 @@ const initialState = {
   description: '',
   balanceType: 'income',
   isEditing: false,
-  editingId: '',
+  editingId: null,
 };
 
 const balanceSlice = createSlice({
@@ -62,12 +89,13 @@ const balanceSlice = createSlice({
       state.amount = '';
       state.description = '';
       state.balanceType = 'income';
+      state.isEditing = false;
+      state.editingId = null;
     },
     handleViews: (state) => {
       state.gridView = !state.gridView;
     },
     setEditBalance: (state, { payload }) => {
-      console.log(payload);
       const specificBalance = state.allBalances.find(
         (balance) => balance._id === payload
       );
@@ -78,6 +106,9 @@ const balanceSlice = createSlice({
       state.amount = amount;
       state.description = description;
       state.balanceType = balanceType;
+    },
+    handleLoading: (state) => {
+      state.isLoading = false;
     },
   },
   extraReducers: {
@@ -104,6 +135,32 @@ const balanceSlice = createSlice({
     },
     [getAllBalances.rejected]: (state, { payload }) => {
       state.isLoading = false;
+      toast.error(payload);
+    },
+    [editBalance.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editBalance.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.name = '';
+      state.amount = '';
+      state.description = '';
+      state.balanceType = 'income';
+      state.isEditing = false;
+      state.editingId = null;
+      toast.success('Balance edited successfully...');
+    },
+    [editBalance.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+    [deleteBalance.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteBalance.fulfilled]: () => {
+      toast.success('Balance is deleted...');
+    },
+    [deleteBalance.rejected]: (state, { payload }) => {
       toast.error(payload);
     },
   },

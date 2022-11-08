@@ -234,3 +234,9 @@ select {
 .border-red {
   border-top: 5px solid var(--red-dark);
 }
+
+/* No balance */
+.no-balance {
+  margin-top: 5rem;
+  text-align: center;
+}

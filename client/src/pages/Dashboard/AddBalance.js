@@ -8,12 +8,12 @@ import {
   handleValues,
   clearValues,
   createBalance,
+  editBalance,
 } from '../../redux/balance/balanceSlice';
 import { toast } from 'react-toastify';
 const AddBalance = () => {
-  const { name, amount, description, balanceType, isLoading } = useSelector(
-    (store) => store.balance
-  );
+  const { name, amount, description, balanceType, isLoading, isEditing } =
+    useSelector((store) => store.balance);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -28,11 +28,15 @@ const AddBalance = () => {
       toast.error('Please fill the values');
       return;
     }
+    if (isEditing) {
+      dispatch(editBalance({ name, amount, description, balanceType }));
+      return;
+    }
     dispatch(createBalance({ name, amount, description, balanceType }));
   };
   return (
     <Wrapper>
-      <SectionTitle title='add balance' />
+      <SectionTitle title={isEditing ? 'Edit balance' : 'add balance'} />
       <form className='form'>
         <div className='form-center'>
           <Row

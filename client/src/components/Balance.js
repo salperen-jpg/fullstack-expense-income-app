@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaDollarSign, FaCalendarAlt, FaMinus, FaPlus } from 'react-icons/fa';
 import BalanceIconText from './BalanceIconText';
 import { useDispatch } from 'react-redux';
-import { setEditBalance } from '../redux/balance/balanceSlice';
+import { deleteBalance, setEditBalance } from '../redux/balance/balanceSlice';
 import { Link } from 'react-router-dom';
 const Balance = ({ name, description, _id, amount, balanceType }) => {
   const dispatch = useDispatch();
@@ -43,7 +43,12 @@ const Balance = ({ name, description, _id, amount, balanceType }) => {
         >
           edit
         </Link>
-        <button className='btn red-btn'>delete</button>
+        <button
+          className='btn red-btn'
+          onClick={() => dispatch(deleteBalance(_id))}
+        >
+          delete
+        </button>
       </div>
     </Wrapper>
   );
