@@ -2,7 +2,7 @@ import Balance from '../Models/Balance.js';
 import { BadRequest, NotFoundClass } from '../errors/index.js';
 import { StatusCodes } from 'http-status-codes';
 import checkPermissions from '../utils/checkPermissions.js';
-
+import calculate from '../utils/calculateTotals.js';
 // ADD BALANCE
 const addBalance = async (req, res) => {
   const { name, amount, balanceType, description } = req.body;
@@ -39,6 +39,7 @@ const deleteBalance = async (req, res) => {
   checkPermissions(req.user, balance.createdBy);
 
   await Balance.findOneAndDelete({ _id: balanceId });
+  // await job.remove() =>>>> alternative
 
   res.status(StatusCodes.OK).json({ balance });
 };
@@ -68,4 +69,31 @@ const editBalance = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedJob });
 };
 
-export { addBalance, getBalances, deleteBalance, editBalance };
+// overview
+const stats = async (req, res) => {
+  const { userId } = req.user;
+  // getting income
+  const incomes = await Balance.find({
+    createdBy: userId,
+    balanceType: 'income',
+  });
+  // expense
+  const expenses = await Balance.find({
+    createdBy: userId,
+    balanceType: 'expense',
+  });
+
+  const incomeTotal = calculate(incomes);
+  const expensesTotal = calculate(expenses);
+
+  res.status(StatusCodes.OK).json({
+    stats: [
+      { name: 'Incomes', incomeTotal },
+      { name: 'Expenses', expensesTotal },
+    ],
+    numOfExpenses: expenses.length,
+    numOfIncomes: incomes.length,
+  });
+};
+
+export { addBalance, getBalances, deleteBalance, editBalance, stats };

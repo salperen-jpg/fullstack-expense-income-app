@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import Filters from './Filters';
 import Balances from './Balances';
 import BalanceView from './BalanceView';
-
+import Loading from './Loading';
 export {
   BigSidebar,
   SmallSidebar,
@@ -14,4 +14,5 @@ export {
   Filters,
   Balances,
   BalanceView,
+  Loading,
 };

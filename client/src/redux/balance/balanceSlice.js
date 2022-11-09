@@ -32,7 +32,7 @@ export const editBalance = createAsyncThunk(
   'balance/editBalance',
   async (balanceInfo, thunkAPI) => {
     try {
-      const response = await authFetch.patch(
+      await authFetch.patch(
         `/balances/${thunkAPI.getState().balance.editingId}`,
         balanceInfo
       );
@@ -48,6 +48,18 @@ export const deleteBalance = createAsyncThunk(
     try {
       const response = await authFetch.delete(`/balances/${id}`);
       thunkAPI.dispatch(getAllBalances());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const getStats = createAsyncThunk(
+  'balance/getStats',
+  async (_, thunkAPI) => {
+    try {
+      const response = await authFetch('/balances/stats');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -74,6 +86,9 @@ const initialState = {
   balanceType: 'income',
   isEditing: false,
   editingId: null,
+  stats: [],
+  numOfExpenses: 0,
+  numOfIncomes: 0,
 };
 
 const balanceSlice = createSlice({
@@ -161,6 +176,19 @@ const balanceSlice = createSlice({
       toast.success('Balance is deleted...');
     },
     [deleteBalance.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
+    [getStats.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getStats.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.stats = payload.stats;
+      state.numOfExpenses = payload.numOfExpenses;
+      state.numOfIncomes = payload.numOfIncomes;
+    },
+    [getStats.rejected]: (state, { payload }) => {
+      state.isLoading = false;
       toast.error(payload);
     },
   },
