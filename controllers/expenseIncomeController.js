@@ -88,8 +88,8 @@ const stats = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     stats: [
-      { name: 'Incomes', incomeTotal },
-      { name: 'Expenses', expensesTotal },
+      { name: 'Incomes', total: incomeTotal },
+      { name: 'Expenses', total: expensesTotal },
     ],
     numOfExpenses: expenses.length,
     numOfIncomes: incomes.length,

@@ -6,6 +6,8 @@ import Filters from './Filters';
 import Balances from './Balances';
 import BalanceView from './BalanceView';
 import Loading from './Loading';
+import StatsOverview from './StatsOverview';
+import Chart from './Chart';
 export {
   BigSidebar,
   SmallSidebar,
@@ -15,4 +17,6 @@ export {
   Balances,
   BalanceView,
   Loading,
+  StatsOverview,
+  Chart,
 };
