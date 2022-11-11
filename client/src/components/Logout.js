@@ -1,10 +1,15 @@
 import React from 'react';
 import { MdOutlineLogout } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { logOut } from '../redux/user/userSlice';
+
 const Logout = () => {
+  const dispatch = useDispatch();
+
   return (
     <Wrapper>
-      <button className='btn logOut-btn'>
+      <button className='btn logOut-btn' onClick={() => dispatch(logOut())}>
         logout
         <MdOutlineLogout />
       </button>

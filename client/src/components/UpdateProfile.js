@@ -76,12 +76,14 @@ const Wrapper = styled.aside`
     background-color: rgba(0, 0, 0, 0.3);
     z-index: -1;
     visibility: hidden;
+    transform: scale(0);
     display: grid;
     place-items: center;
     transition: var(--transition);
   }
   .show-profile {
     z-index: 3;
+    transform: scale(1);
     visibility: visible;
   }
 

@@ -11,7 +11,7 @@ const addBalance = async (req, res) => {
     throw new BadRequest('Provide all values');
   }
 
-  req.body.createdBy = req.user.userId;
+  req.body.b = req.user.userId;
   const balance = await Balance.create(req.body);
   res.status(StatusCodes.CREATED).json({ balance });
 };

@@ -5,6 +5,7 @@ import { MdClose } from 'react-icons/md';
 import NavLinks from './NavLinks';
 import Logout from './Logout';
 import { toggleSidebar } from '../redux/features/UI/uiSlice';
+import Logo from './Logo';
 const SmallSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.ui);
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const SmallSidebar = () => {
           <button className='btn close-btn'>
             <MdClose onClick={toggle} />
           </button>
+          <Logo />
           <NavLinks toggle={toggle} />
           <Logout />
         </div>
@@ -32,7 +34,7 @@ const Wrapper = styled.div`
   .sidebar {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: -1;
     visibility: hidden;
     display: grid;
@@ -55,6 +57,9 @@ const Wrapper = styled.div`
     gap: 1rem;
     align-items: center;
     justify-content: center;
+  }
+  .logo {
+    width: 15rem;
   }
   .nav-links {
     display: flex;

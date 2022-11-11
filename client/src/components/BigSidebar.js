@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import NavLinks from './NavLinks';
 import Logout from './Logout';
+import Logo from './Logo';
 
 const BigSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.ui);
@@ -12,7 +13,7 @@ const BigSidebar = () => {
       <div className={!isSidebarOpen ? 'big-sidebar show' : 'big-sidebar'}>
         <div className='content'>
           <header>
-            <h4>Logo</h4>
+            <Logo />
           </header>
           <NavLinks />
           <Logout />
@@ -36,6 +37,9 @@ const Wrapper = styled.aside`
       margin-left: -250px;
       transition: var(--transition);
     }
+    .show {
+      margin-left: 0;
+    }
     .content {
       position: sticky;
       top: 0;
@@ -48,18 +52,20 @@ const Wrapper = styled.aside`
       display: flex;
       align-items: center;
       padding: 0 2rem;
+      .logo {
+        width: 15rem;
+      }
     }
-    .show {
-      margin-left: 0;
+    .nav-links {
+      margin-top: 2rem;
     }
-
     .nav-link {
       display: flex;
       padding: 1.5rem 2rem;
       align-items: center;
       gap: 1rem;
       text-transform: capitalize;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: 0.1rem;
       color: var(--grey-500);

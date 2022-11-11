@@ -8,8 +8,8 @@ import {
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
 import { toggleSidebar } from '../redux/features/UI/uiSlice';
-import { logOut } from '../redux/user/userSlice';
 import UpdateProfile from './UpdateProfile';
+import Logo from './Logo';
 const Navbar = () => {
   const dispatch = useDispatch();
   const { name } = useSelector((store) => store.user.user);
@@ -25,7 +25,8 @@ const Navbar = () => {
         >
           <MdOutlineFormatAlignCenter />
         </button>
-        <h1>LOGO</h1>
+        <Logo />
+        {/* <h2>Dashboard</h2> */}
         <div className='dropdown-container'>
           <button
             className='btn user-btn'
@@ -53,13 +54,6 @@ const Navbar = () => {
               }}
             >
               Update Profile
-            </button>
-            <button
-              type='button'
-              className='logout btn'
-              onClick={() => dispatch(logOut())}
-            >
-              logout
             </button>
           </div>
         </div>
@@ -93,10 +87,20 @@ const Wrapper = styled.nav`
       font-size: 2rem;
     }
   }
-  h1 {
+  .logo {
+    width: 9rem;
+  }
+  /* h2 {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: 0;
+    padding: 0;
+  } */
+  @media (min-width: 800px) {
+    .logo {
+      width: 15rem;
+    }
   }
   .toggle-btn:hover {
     transform: rotateZ(90deg);
@@ -126,8 +130,8 @@ const Wrapper = styled.nav`
 
     button {
       width: 100%;
-      padding: 1rem 1rem;
-
+      padding: 0.5rem 1rem;
+      font-size: 0.775rem;
       background: var(--primary-200);
     }
   }

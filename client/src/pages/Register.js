@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, loginUser } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 const Register = () => {
   const [userValues, setUserValues] = useState({
@@ -56,8 +57,8 @@ const Register = () => {
       <div className='banner'></div>
       {/* img container */}
       <div className='form-container'>
-        {/* LOGO */}
         <form className='form'>
+          <Logo />
           <div className='btn-container'>
             <button
               className={`btn change-btn ${
@@ -124,6 +125,12 @@ const Wrapper = styled.section`
     width: 90vw;
     margin: 0 auto;
     max-width: 25rem;
+  }
+  .logo {
+    width: 15rem;
+    display: block;
+    margin-inline: auto;
+    margin-bottom: 2rem;
   }
   .btn-submit {
     width: 100%;
