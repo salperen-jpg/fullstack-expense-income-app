@@ -1,5 +1,5 @@
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
 /* RESET */
 *,
@@ -48,8 +48,8 @@ html {
   --green-dark: #0f5132;
 
   /* fonts  */
-  --headingFont: 'Roboto Condensed', Sans-Serif;
-  --bodyFont: 'Lato', Sans-Serif;
+  --headingFont: 'Open Sans', Sans-Serif;
+  --bodyFont: 'Open Sans', Sans-Serif;
 
   /* rest of the vars */
   --backgroundColor: var(--grey-50);

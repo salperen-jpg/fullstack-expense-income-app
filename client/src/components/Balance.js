@@ -4,10 +4,19 @@ import { FaDollarSign, FaCalendarAlt, FaMinus, FaPlus } from 'react-icons/fa';
 import BalanceIconText from './BalanceIconText';
 import { useDispatch } from 'react-redux';
 import { deleteBalance, setEditBalance } from '../redux/balance/balanceSlice';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
-const Balance = ({ name, description, _id, amount, balanceType }) => {
+const Balance = ({
+  name,
+  description,
+  _id,
+  amount,
+  balanceType,
+  createdAt,
+}) => {
   const dispatch = useDispatch();
 
+  const formattedDate = moment(createdAt).format('MMM DD,YYYY');
   return (
     <Wrapper
       className={balanceType === 'income' ? 'border-green' : 'border-red'}
@@ -31,7 +40,7 @@ const Balance = ({ name, description, _id, amount, balanceType }) => {
       </header>
       <div className='info'>
         <BalanceIconText icon={<FaDollarSign />} text={amount} fixed />
-        <BalanceIconText icon={<FaCalendarAlt />} text='Oct 21,2022' />
+        <BalanceIconText icon={<FaCalendarAlt />} text={formattedDate} />
 
         <p className='description'>{description}</p>
       </div>

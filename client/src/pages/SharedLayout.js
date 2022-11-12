@@ -30,6 +30,7 @@ const Wrapper = styled.section`
   .dash {
     width: 90vw;
     margin: 0 auto;
+    padding: 2rem;
   }
   @media (min-width: 992px) {
     main {

@@ -11,11 +11,10 @@ const SectionTitle = ({ title }) => {
 
 const Wrapper = styled.div`
   text-align: center;
-  margin-top: 2rem;
   .underline {
     width: 7rem;
     height: 4px;
-    margin: 1rem auto;
+    margin: 2rem auto;
     background-color: var(--primary-500);
   }
   h2 {

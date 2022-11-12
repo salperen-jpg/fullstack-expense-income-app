@@ -14,7 +14,7 @@ const AllBalance = () => {
 };
 
 const Wrapper = styled.section`
-  margin-top: 4rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: 1fr;
   @media (min-width: 992px) {
