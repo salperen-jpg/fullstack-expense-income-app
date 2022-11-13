@@ -19,7 +19,41 @@ const addBalance = async (req, res) => {
 // GET ALL BALANCES
 const getBalances = async (req, res) => {
   const { userId } = req.user;
-  const balances = await Balance.find({ createdBy: userId });
+  // query params
+  const { search, balanceType, sort } = req.query;
+  console.log(req.query);
+
+  const queryObj = {
+    createdBy: userId,
+  };
+  // BALANCE TYPE
+  if (balanceType !== 'all') {
+    queryObj.balanceType = balanceType;
+  }
+  // SEARCH
+  if (search) {
+    queryObj.name = { $regex: search, $options: 'i' };
+  }
+  // AMOUNT
+
+  // NO AWAIT INFRONT FOR CHAINING
+  let result = Balance.find(queryObj);
+
+  // sort chaining
+  if (sort === 'newest') {
+    result = result.sort({ createdAt: 'desc' });
+  }
+  if (sort === 'oldest') {
+    result = result.sort({ createdAt: 'asc' });
+  }
+  if (sort === 'a-z') {
+    result = result.sort({ name: 'asc' });
+  }
+  if (sort === 'z-a') {
+    result = result.sort({ name: 'desc' });
+  }
+
+  const balances = await result;
 
   res.status(StatusCodes.OK).json({
     balances,

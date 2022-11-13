@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllBalances } from '../redux/balance/balanceSlice';
 import { Link } from 'react-router-dom';
 const Balances = () => {
-  const { gridView, allBalances, isLoading } = useSelector(
+  const { gridView, allBalances, isLoading, filters } = useSelector(
     (store) => store.balance
   );
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllBalances());
-  }, []);
+  }, [filters]);
 
   if (isLoading) {
     return <Loading />;

@@ -2,6 +2,34 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import authFetch from '../../utils/axios';
 
+const initialState = {
+  // balance concern
+  allBalances: [],
+  numOfBalances: 0,
+  numOfPages: 0,
+  isLoading: false,
+  name: '',
+  amount: '',
+  description: '',
+  balanceType: 'income',
+  isEditing: false,
+  editingId: null,
+  // stats
+  stats: [],
+  numOfExpenses: 0,
+  numOfIncomes: 0,
+  // filter and view
+  filters: {
+    nameFilter: '',
+    min: 0,
+    max: 0,
+    price: 0,
+    typeFilter: 'all',
+    sort: 'newest',
+  },
+  gridView: true,
+};
+
 export const createBalance = createAsyncThunk(
   'balance/createBalance',
   async (balance, thunkAPI) => {
@@ -18,8 +46,15 @@ export const createBalance = createAsyncThunk(
 export const getAllBalances = createAsyncThunk(
   'balance/getAllBalances',
   async (_, thunkAPI) => {
+    const {
+      filters: { nameFilter, sort, typeFilter },
+    } = thunkAPI.getState().balance;
+    let url = `?balanceType=${typeFilter}&sort=${sort}`;
+    if (nameFilter) {
+      url += `&search=${nameFilter}`;
+    }
     try {
-      const response = await authFetch.get('/balances');
+      const response = await authFetch.get(`/balances${url}`);
 
       return response.data;
     } catch (error) {
@@ -67,30 +102,6 @@ export const getStats = createAsyncThunk(
   }
 );
 
-const initialState = {
-  allBalances: [],
-  numOfBalances: 0,
-  numOfPages: 0,
-  isLoading: false,
-  filters: {
-    nameFilter: '',
-    min: 0,
-    max: 0,
-    price: 0,
-    typeFilter: 'all',
-  },
-  gridView: true,
-  name: '',
-  amount: '',
-  description: '',
-  balanceType: 'income',
-  isEditing: false,
-  editingId: null,
-  stats: [],
-  numOfExpenses: 0,
-  numOfIncomes: 0,
-};
-
 const balanceSlice = createSlice({
   name: 'balance',
   initialState,
@@ -124,6 +135,12 @@ const balanceSlice = createSlice({
     },
     handleLoading: (state) => {
       state.isLoading = false;
+    },
+    handleFilterInputs: (state, { payload: { name, value } }) => {
+      state.filters = {
+        ...state.filters,
+        [name]: value,
+      };
     },
   },
   extraReducers: {
@@ -193,6 +210,11 @@ const balanceSlice = createSlice({
     },
   },
 });
-export const { handleValues, clearValues, handleViews, setEditBalance } =
-  balanceSlice.actions;
+export const {
+  handleValues,
+  clearValues,
+  handleViews,
+  setEditBalance,
+  handleFilterInputs,
+} = balanceSlice.actions;
 export default balanceSlice.reducer;
