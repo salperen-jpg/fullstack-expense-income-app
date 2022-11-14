@@ -11,7 +11,7 @@ const addBalance = async (req, res) => {
     throw new BadRequest('Provide all values');
   }
 
-  req.body.b = req.user.userId;
+  req.body.createdBy = req.user.userId;
   const balance = await Balance.create(req.body);
   res.status(StatusCodes.CREATED).json({ balance });
 };
@@ -20,8 +20,7 @@ const addBalance = async (req, res) => {
 const getBalances = async (req, res) => {
   const { userId } = req.user;
   // query params
-  const { search, balanceType, sort } = req.query;
-  console.log(req.query);
+  const { search, balanceType, sort, amount } = req.query;
 
   const queryObj = {
     createdBy: userId,
@@ -35,7 +34,9 @@ const getBalances = async (req, res) => {
     queryObj.name = { $regex: search, $options: 'i' };
   }
   // AMOUNT
-
+  if (amount) {
+    queryObj.amount = { $lte: amount };
+  }
   // NO AWAIT INFRONT FOR CHAINING
   let result = Balance.find(queryObj);
 
@@ -54,6 +55,8 @@ const getBalances = async (req, res) => {
   }
 
   const balances = await result;
+  // const balancesAmount = balances.map((balance) => balance.amount);
+  // const max = Math.max(...balancesAmount);
 
   res.status(StatusCodes.OK).json({
     balances,

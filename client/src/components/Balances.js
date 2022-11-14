@@ -3,13 +3,18 @@ import GridView from './GridView';
 import ListView from './ListView';
 import Loading from './Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllBalances } from '../redux/balance/balanceSlice';
+import { getAllBalances, getAmount } from '../redux/balance/balanceSlice';
 import { Link } from 'react-router-dom';
 const Balances = () => {
   const { gridView, allBalances, isLoading, filters } = useSelector(
     (store) => store.balance
   );
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getAmount());
+  }, []);
+
   React.useEffect(() => {
     dispatch(getAllBalances());
   }, [filters]);

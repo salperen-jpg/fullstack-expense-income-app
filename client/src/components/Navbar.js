@@ -139,9 +139,10 @@ const Wrapper = styled.nav`
     opacity: 1;
   }
 
-  @media screen {
+  @media (min-width: 800px) {
     position: sticky;
     top: 0;
+    z-index: 200;
     .nav-center {
       width: 90%;
     }

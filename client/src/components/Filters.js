@@ -1,14 +1,17 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { handleFilterInputs } from '../redux/balance/balanceSlice';
+import {
+  handleFilterInputs,
+  clearFilterInputs,
+} from '../redux/balance/balanceSlice';
 import Row from './Row';
 import Select from './Select';
 
 const Filters = () => {
   // name search, balanceType, sort to based on a name
   const {
-    filters: { nameFilter, min, max, price, typeFilter, sort },
+    filters: { nameFilter, min, max, typeFilter, sort, amountFilter },
   } = useSelector((store) => store.balance);
   const dispatch = useDispatch();
 
@@ -42,6 +45,26 @@ const Filters = () => {
             options={['a-z', 'z-a', 'newest', 'oldest']}
             handleChange={handleChange}
           />
+          <div className='form-row'>
+            <label htmlFor='amountFilter'>Amount</label>
+            <span className='amount'>{amountFilter}</span>
+            <input
+              type='range'
+              name='amountFilter'
+              id='amountFilter'
+              min={0}
+              max={max}
+              value={amountFilter}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            type='button'
+            className='btn clear-btn red-btn'
+            onClick={() => dispatch(clearFilterInputs())}
+          >
+            Clear
+          </button>
         </div>
       </form>
     </Wrapper>
@@ -49,11 +72,23 @@ const Filters = () => {
 };
 
 const Wrapper = styled.section`
-  position: relative;
+  .form {
+    padding: 1rem;
+  }
   .filter-form {
     display: block;
-    position: sticky;
-    top: 10rem;
+  }
+  .clear-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  @media (min-width: 1200px) {
+    .form {
+      position: sticky;
+      top: 7rem;
+      width: 200px;
+    }
   }
 `;
 export default Filters;

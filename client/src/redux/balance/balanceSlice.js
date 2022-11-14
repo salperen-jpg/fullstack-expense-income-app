@@ -23,7 +23,7 @@ const initialState = {
     nameFilter: '',
     min: 0,
     max: 0,
-    price: 0,
+    amountFilter: 0,
     typeFilter: 'all',
     sort: 'newest',
   },
@@ -47,12 +47,16 @@ export const getAllBalances = createAsyncThunk(
   'balance/getAllBalances',
   async (_, thunkAPI) => {
     const {
-      filters: { nameFilter, sort, typeFilter },
+      filters: { nameFilter, sort, typeFilter, amountFilter },
     } = thunkAPI.getState().balance;
     let url = `?balanceType=${typeFilter}&sort=${sort}`;
     if (nameFilter) {
       url += `&search=${nameFilter}`;
     }
+    if (amountFilter !== 0) {
+      url += `&amount=${amountFilter}`;
+    }
+
     try {
       const response = await authFetch.get(`/balances${url}`);
 
@@ -102,6 +106,23 @@ export const getStats = createAsyncThunk(
   }
 );
 
+export const getAmount = createAsyncThunk(
+  'balance/getAmount',
+  async (_, thunkAPI) => {
+    const {
+      filters: { nameFilter, sort, typeFilter },
+    } = thunkAPI.getState().balance;
+    let url = `?balanceType=${typeFilter}&sort=${sort}`;
+    try {
+      const response = await authFetch.get(`/balances${url}`);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const balanceSlice = createSlice({
   name: 'balance',
   initialState,
@@ -137,10 +158,23 @@ const balanceSlice = createSlice({
       state.isLoading = false;
     },
     handleFilterInputs: (state, { payload: { name, value } }) => {
+      if (name === 'amountFilter') {
+        value = Number(value);
+        console.log(value);
+      }
       state.filters = {
         ...state.filters,
         [name]: value,
       };
+    },
+    clearFilterInputs: (state) => {
+      const filters = {
+        nameFilter: '',
+        amountFilter: state.filters.max,
+        typeFilter: 'all',
+        sort: 'newest',
+      };
+      return { ...state, filters: { ...filters } };
     },
   },
   extraReducers: {
@@ -160,6 +194,11 @@ const balanceSlice = createSlice({
       state.isLoading = true;
     },
     [getAllBalances.fulfilled]: (state, { payload }) => {
+      // Amount
+      // const amounts = payload.balances.map((balance) => balance.amount);
+      // const maxAmount = Math.max(...amounts);
+      // console.log(maxAmount);
+
       state.isLoading = false;
       state.allBalances = payload.balances;
       state.numOfBalances = payload.numOfBalances;
@@ -208,6 +247,13 @@ const balanceSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
+    [getAmount.fulfilled]: (state, { payload }) => {
+      // Amount
+      const amounts = payload.balances.map((balance) => balance.amount);
+      const maxAmount = Math.max(...amounts);
+      state.filters.amountFilter = maxAmount;
+      state.filters.max = maxAmount;
+    },
   },
 });
 export const {
@@ -216,5 +262,6 @@ export const {
   handleViews,
   setEditBalance,
   handleFilterInputs,
+  clearFilterInputs,
 } = balanceSlice.actions;
 export default balanceSlice.reducer;

@@ -240,3 +240,10 @@ select {
   margin-top: 5rem;
   text-align: center;
 }
+
+@media screen and (min-width: 1200px) {
+  .filter-form {
+    position: sticky;
+    top: 6rem;
+  }
+}
