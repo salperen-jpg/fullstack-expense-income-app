@@ -46,12 +46,13 @@ const Filters = () => {
             handleChange={handleChange}
           />
           <div className='form-row'>
-            <label htmlFor='amountFilter'>Amount</label>
-            <span className='amount'>{amountFilter}</span>
+            {/* <label htmlFor='amountFilter'>Amount</label> */}
+            <span className='amount'>{amountFilter}$</span>
             <input
               type='range'
               name='amountFilter'
               id='amountFilter'
+              className='range-input'
               min={0}
               max={max}
               value={amountFilter}
@@ -77,6 +78,15 @@ const Wrapper = styled.section`
   }
   .filter-form {
     display: block;
+  }
+  .amount {
+    display: block;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+  }
+  input[type='range'] {
+    padding: 0;
   }
   .clear-btn {
     display: block;

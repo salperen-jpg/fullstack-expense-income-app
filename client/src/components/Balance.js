@@ -87,6 +87,7 @@ const Wrapper = styled.article`
     border-radius: var(--borderRadius);
     padding: 0.5rem;
     gap: 1rem;
+    text-transform: capitalize;
   }
   .icon-container {
     padding: 0.5rem;

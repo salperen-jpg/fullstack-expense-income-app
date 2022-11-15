@@ -207,12 +207,13 @@ ul {
   font-size: 0.8rem;
   display: block;
   text-transform: capitalize;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
   color: var(--grey-600);
 }
 .form input[type='text'],
 .form input[type='email'],
 .form input[type='password'],
+.form input[type='range'],
 .form input[type='number'],
 select {
   width: 100%;
