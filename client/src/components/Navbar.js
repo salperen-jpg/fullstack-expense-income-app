@@ -7,7 +7,7 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
-import { toggleSidebar } from '../redux/features/UI/uiSlice';
+import { toggleSidebar } from '../redux/UI/uiSlice';
 import UpdateProfile from './UpdateProfile';
 import Logo from './Logo';
 const Navbar = () => {
@@ -90,13 +90,6 @@ const Wrapper = styled.nav`
   .logo {
     width: 9rem;
   }
-  /* h2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-  } */
   @media (min-width: 800px) {
     .logo {
       width: 15rem;

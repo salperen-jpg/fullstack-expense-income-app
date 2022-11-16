@@ -12,10 +12,12 @@ const Filters = () => {
   // name search, balanceType, sort to based on a name
   const {
     filters: { nameFilter, min, max, typeFilter, sort, amountFilter },
+    isLoading,
   } = useSelector((store) => store.balance);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
+    if (isLoading) return;
     dispatch(
       handleFilterInputs({ name: e.target.name, value: e.target.value })
     );
@@ -53,7 +55,7 @@ const Filters = () => {
               name='amountFilter'
               id='amountFilter'
               className='range-input'
-              min={0}
+              min={min}
               max={max}
               value={amountFilter}
               onChange={handleChange}

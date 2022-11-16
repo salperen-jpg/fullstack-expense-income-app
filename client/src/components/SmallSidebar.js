@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdClose } from 'react-icons/md';
 import NavLinks from './NavLinks';
 import Logout from './Logout';
-import { toggleSidebar } from '../redux/features/UI/uiSlice';
+import { toggleSidebar } from '../redux/UI/uiSlice';
 import Logo from './Logo';
 const SmallSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.ui);
