@@ -1,11 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
   addToLocalStorage,
   getFromLocalStore,
   removeFromLocalStorage,
 } from '../../utils/localStorage';
+
+import {
+  registerUserThunk,
+  loginUserThunk,
+  updateUserThunk,
+} from './userThunk';
+
 const initialState = {
   user: getFromLocalStore(),
   isLoading: false,
@@ -13,45 +19,12 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
-  async (user, thunkAPI) => {
-    console.log(user);
-    try {
-      const response = await axios.post('/api/v1/auth/register', user);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  registerUserThunk
 );
 
-export const loginUser = createAsyncThunk(
-  'user/loginUser',
-  async (user, thunkAPI) => {
-    try {
-      const response = await axios.post('/api/v1/auth/login', user);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.reponse.data.msg);
-    }
-  }
-);
+export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk);
 
-export const updateUser = createAsyncThunk(
-  'user/updateUser',
-  async (user, thunkAPI) => {
-    try {
-      const response = await axios.patch('/api/v1/auth/updateUser', user, {
-        headers: {
-          authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.log(error.response);
-    }
-  }
-);
+export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk);
 
 const userSlice = createSlice({
   name: 'user',

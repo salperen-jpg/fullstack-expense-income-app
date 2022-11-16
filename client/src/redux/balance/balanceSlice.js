@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import authFetch from '../../utils/axios';
+import {
+  deleteBalanceThunk,
+  editBalanceThunk,
+  getAmountThunk,
+  getBalanceThunk,
+  getStatsThunk,
+} from './balanceThunk';
 
 const initialState = {
   // balance concern
@@ -32,96 +38,27 @@ const initialState = {
 
 export const createBalance = createAsyncThunk(
   'balance/createBalance',
-  async (balance, thunkAPI) => {
-    try {
-      const response = await authFetch.post('/balances', balance);
-      thunkAPI.dispatch(clearValues());
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  createAsyncThunk
 );
 
 export const getAllBalances = createAsyncThunk(
   'balance/getAllBalances',
-  async (_, thunkAPI) => {
-    const {
-      filters: { nameFilter, sort, typeFilter, amountFilter },
-    } = thunkAPI.getState().balance;
-    let url = `?balanceType=${typeFilter}&sort=${sort}`;
-    if (nameFilter) {
-      url += `&search=${nameFilter}`;
-    }
-    if (amountFilter !== 0) {
-      url += `&amount=${amountFilter}`;
-    }
-
-    try {
-      const response = await authFetch.get(`/balances${url}`);
-
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  getBalanceThunk
 );
 
 export const editBalance = createAsyncThunk(
   'balance/editBalance',
-  async (balanceInfo, thunkAPI) => {
-    try {
-      await authFetch.patch(
-        `/balances/${thunkAPI.getState().balance.editingId}`,
-        balanceInfo
-      );
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  editBalanceThunk
 );
 
 export const deleteBalance = createAsyncThunk(
   'balance/deleteBalance',
-  async (id, thunkAPI) => {
-    try {
-      const response = await authFetch.delete(`/balances/${id}`);
-      thunkAPI.dispatch(getAllBalances());
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
+  deleteBalanceThunk
 );
 
-export const getStats = createAsyncThunk(
-  'balance/getStats',
-  async (_, thunkAPI) => {
-    try {
-      const response = await authFetch('/balances/stats');
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
-);
+export const getStats = createAsyncThunk('balance/getStats', getStatsThunk);
 
-export const getAmount = createAsyncThunk(
-  'balance/getAmount',
-  async (_, thunkAPI) => {
-    const {
-      filters: { nameFilter, sort, typeFilter },
-    } = thunkAPI.getState().balance;
-    let url = `?balanceType=${typeFilter}&sort=${sort}`;
-    try {
-      const response = await authFetch.get(`/balances${url}`);
-
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
-);
+export const getAmount = createAsyncThunk('balance/getAmount', getAmountThunk);
 
 const balanceSlice = createSlice({
   name: 'balance',
@@ -160,7 +97,6 @@ const balanceSlice = createSlice({
     handleFilterInputs: (state, { payload: { name, value } }) => {
       if (name === 'amountFilter') {
         value = Number(value);
-        console.log(value);
       }
       state.filters = {
         ...state.filters,
@@ -194,11 +130,6 @@ const balanceSlice = createSlice({
       state.isLoading = true;
     },
     [getAllBalances.fulfilled]: (state, { payload }) => {
-      // Amount
-      // const amounts = payload.balances.map((balance) => balance.amount);
-      // const maxAmount = Math.max(...amounts);
-      // console.log(maxAmount);
-
       state.isLoading = false;
       state.allBalances = payload.balances;
       state.numOfBalances = payload.numOfBalances;
