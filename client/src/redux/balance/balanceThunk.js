@@ -64,7 +64,7 @@ export const getStatsThunk = async (_, thunkAPI) => {
 
 export const getAmountThunk = async (_, thunkAPI) => {
   const {
-    filters: { nameFilter, sort, typeFilter },
+    filters: { sort, typeFilter },
   } = thunkAPI.getState().balance;
   let url = `?balanceType=${typeFilter}&sort=${sort}`;
   try {
