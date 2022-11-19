@@ -6,6 +6,9 @@ const app = express();
 import 'express-async-errors';
 import connectDB from './db/connect.js';
 import morgan from 'morgan';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
 
 // MIDDLEWARE IMPORTS
 
@@ -21,21 +24,15 @@ import balanceRouter from './routes/balanceRoutes.js';
 
 // middleware for json
 app.use(express.json());
+app.use(helmet()); //seceres headers
+app.use(xss()); // sanitize the input => cross side atacks
+app.use(mongoSanitize()); //
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
 // ROUTES
-
-app.get('/', (req, res) => {
-  return res.json({ msg: 'Welcome to server' });
-});
-
-app.get('/api/v1', (req, res) => {
-  return res.json({ msg: 'Welcome ' });
-});
-
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/balances', balanceRouter);
 
