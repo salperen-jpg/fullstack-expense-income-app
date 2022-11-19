@@ -3,16 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Chart, Loading, StatsOverview } from '../../components';
 import SectionTitle from '../../components/SectionTitle';
-import { getStats, getAmount } from '../../redux/balance/balanceSlice';
+import { getStats } from '../../redux/balance/balanceSlice';
 const Stats = () => {
   const dispatch = useDispatch();
   const { isLoading, stats, numOfExpenses, numOfIncomes } = useSelector(
     (store) => store.balance
   );
-
-  // React.useEffect(() => {
-  //   dispatch(getAmount());
-  // }, []);
 
   React.useEffect(() => {
     dispatch(getStats());

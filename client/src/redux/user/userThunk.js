@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authFetch from '../../utils/axios';
 
 export const registerUserThunk = async (user, thunkAPI) => {
   try {
@@ -29,5 +30,15 @@ export const updateUserThunk = async (user, thunkAPI) => {
     return response.data;
   } catch (error) {
     console.log(error.response);
+  }
+};
+
+export const getUserThunk = async (_, thunkAPI) => {
+  try {
+    const response = await authFetch('/auth/getUser');
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return thunkAPI.rejectWithValue(error.response.data.msg);
   }
 };

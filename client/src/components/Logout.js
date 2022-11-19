@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
@@ -9,7 +10,13 @@ const Logout = () => {
 
   return (
     <Wrapper>
-      <button className='btn logOut-btn' onClick={() => dispatch(logOut())}>
+      <button
+        className='btn logOut-btn'
+        onClick={async () => {
+          await axios('api/v1/auth/logOutUser');
+          dispatch(logOut());
+        }}
+      >
         logout
         <MdOutlineLogout />
       </button>
