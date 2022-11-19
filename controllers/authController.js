@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
   res
     .status(StatusCodes.CREATED)
-    .json({ user: { name: user.name, email: user.email, token } });
+    .json({ user: { name: user.name, email: user.email } });
 };
 
 // LOGIN
@@ -49,7 +49,7 @@ const login = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email: user.email, token } });
+    .json({ user: { name: user.name, email: user.email } });
 };
 
 // UPDATE
@@ -74,7 +74,22 @@ const updateUser = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email: user.email, token } });
+    .json({ user: { name: user.name, email: user.email } });
 };
 
-export { register, login, updateUser };
+const getUser = async (req, res, next) => {
+  const currentUser = await User.findOne({ _id: req.user.userId });
+  console.log('hi');
+  // console.log('I am sending');
+  res.status(StatusCodes.OK).json({ user: currentUser });
+};
+
+const logOutUser = async (req, res, next) => {
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCodes.OK).json({ msg: 'Logged out' });
+};
+
+export { register, login, updateUser, getUser, logOutUser };

@@ -9,11 +9,19 @@ const apiLimiter = rateLimiter({
   message: 'Please wait for 15 min , and try again ',
 });
 
-import { register, login, updateUser } from '../controllers/authController.js';
+import {
+  register,
+  login,
+  updateUser,
+  getUser,
+  logOutUser,
+} from '../controllers/authController.js';
 // auth
 import auth from '../middleware/auth.js';
 route.route('/register').post(apiLimiter, register);
 route.route('/login').post(apiLimiter, login);
 route.route('/updateUser').patch(auth, updateUser);
+route.route('/getUser').get(auth, getUser);
+route.route('/logOutUser').get(logOutUser);
 
 export default route;

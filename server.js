@@ -19,14 +19,15 @@ import errorHandlerMiddleware from './middleware/error-handler.js';
 
 import authRouter from './routes/authRoutes.js';
 import balanceRouter from './routes/balanceRoutes.js';
-
+import cookieParser from 'cookie-parser';
 // Routes
 
 // middleware for json
 app.use(express.json());
 app.use(helmet()); //seceres headers
 app.use(xss()); // sanitize the input => cross side atacks
-app.use(mongoSanitize()); //
+app.use(mongoSanitize()); // sanitazing for mongo
+app.use(cookieParser());
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
