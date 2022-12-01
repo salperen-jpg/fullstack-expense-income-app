@@ -135,7 +135,7 @@ const Wrapper = styled.nav`
   @media (min-width: 800px) {
     position: sticky;
     top: 0;
-    z-index: 200;
+    z-index: 5;
     .nav-center {
       width: 90%;
     }

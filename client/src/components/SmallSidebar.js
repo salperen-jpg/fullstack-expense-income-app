@@ -43,7 +43,7 @@ const Wrapper = styled.div`
     transition: var(--transition);
   }
   .show-sidebar {
-    z-index: 1;
+    z-index: 9;
     visibility: visible;
     transform: scale(1);
   }

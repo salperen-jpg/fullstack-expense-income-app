@@ -33,13 +33,13 @@ const Wrapper = styled.section`
   .footer {
     display: grid;
     /* align-items: center; */
-    justify-content: center;
-    gap: 1rem;
+    /* justify-content: center; */
+    /* gap: 1rem; */
   }
   @media (min-width: 992px) {
     .footer {
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
+      /* grid-template-columns: 1fr 1fr;
+      justify-content: center; */
     }
   }
 `;
