@@ -26,6 +26,7 @@ const Filters = () => {
   return (
     <Wrapper>
       <form className='form'>
+        <h4>Filters</h4>
         <div className='form-center filter-form'>
           <Row
             type='text'

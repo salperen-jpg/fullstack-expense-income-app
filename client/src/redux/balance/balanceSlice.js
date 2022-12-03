@@ -6,6 +6,7 @@ import {
   getAmountThunk,
   getBalanceThunk,
   getStatsThunk,
+  createBalanceThunk,
 } from './balanceThunk';
 
 const initialState = {
@@ -38,7 +39,7 @@ const initialState = {
 
 export const createBalance = createAsyncThunk(
   'balance/createBalance',
-  createAsyncThunk
+  createBalanceThunk
 );
 
 export const getAllBalances = createAsyncThunk(
@@ -117,10 +118,10 @@ const balanceSlice = createSlice({
     [createBalance.pending]: (state) => {
       state.isLoading = true;
     },
-    [createBalance.fulfilled]: (state) => {
+    [createBalance.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
+      console.log('I am here');
       toast.success('Balance created...');
-      clearValues();
     },
     [createBalance.rejected]: (state, { payload }) => {
       state.isLoading = false;

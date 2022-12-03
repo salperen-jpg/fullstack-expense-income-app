@@ -54,8 +54,9 @@ const Register = () => {
 
   return (
     <Wrapper>
-      <div className='banner'></div>
       {/* img container */}
+      <div className='banner'></div>
+      {/* form container */}
       <div className='form-container'>
         <form className='form'>
           <Logo />
@@ -108,7 +109,6 @@ const Register = () => {
           </div>
         </form>
       </div>
-      {/* form container */}
     </Wrapper>
   );
 };

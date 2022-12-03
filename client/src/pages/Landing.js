@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import Logo from '../components/Logo';
 const Landing = () => {
   const { user } = useSelector((store) => store.user);
   return (
@@ -11,7 +12,7 @@ const Landing = () => {
       <Wrapper>
         {user && <Navigate to='/dashboard' />}
         <header>
-          <h4>Logo coming up</h4>
+          <Logo />
         </header>
         <div className='landing-hero'>
           <div className='info-container'>
@@ -43,6 +44,9 @@ const Wrapper = styled.section`
     height: 6rem;
     display: flex;
     align-items: center;
+    img {
+      width: 15rem;
+    }
   }
   .landing-hero {
     min-height: calc(100vh - 6rem);

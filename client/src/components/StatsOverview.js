@@ -11,7 +11,7 @@ const StatsOverview = ({ incomes, expenses }) => {
     {
       num: numOfIncomes + numOfExpenses || 0,
       text: 'total',
-      bg: '#8080FF ',
+      bg: '#D1D1FF',
       col: '#000092',
       icon: <HiDocument />,
     },

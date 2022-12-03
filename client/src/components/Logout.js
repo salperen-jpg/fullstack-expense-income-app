@@ -1,4 +1,4 @@
-import axios from 'axios';
+import authFetch from '../utils/axios';
 import React from 'react';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
@@ -8,15 +8,18 @@ import { logOut } from '../redux/user/userSlice';
 const Logout = () => {
   const dispatch = useDispatch();
 
+  const handleLogout = async () => {
+    try {
+      await authFetch.get('auth/logOutUser');
+      dispatch(logOut());
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <Wrapper>
-      <button
-        className='btn logOut-btn'
-        onClick={async () => {
-          await axios('api/v1/auth/logOutUser');
-          dispatch(logOut());
-        }}
-      >
+      <button className='btn logOut-btn' onClick={handleLogout}>
         logout
         <MdOutlineLogout />
       </button>

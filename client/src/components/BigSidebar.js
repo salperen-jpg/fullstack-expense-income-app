@@ -27,6 +27,7 @@ const Wrapper = styled.aside`
   display: none;
 
   @media (min-width: 992px) {
+    background-color: blue;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.06);
     display: block;
     .big-sidebar {
@@ -53,7 +54,7 @@ const Wrapper = styled.aside`
       align-items: center;
       padding: 0 2rem;
       .logo {
-        width: 15rem;
+        width: 13rem;
       }
     }
     .nav-links {

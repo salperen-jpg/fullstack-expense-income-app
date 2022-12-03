@@ -46,7 +46,7 @@ const Chart = ({ stats }) => {
             {stats.map((entry, index) => (
               <Cell
                 key={index}
-                fill={entry.name === 'Incomes' ? 'green' : 'red'}
+                fill={entry.name === 'Incomes' ? '#006D00' : '#FF3737'}
               />
             ))}
           </Pie>
@@ -83,14 +83,6 @@ const Wrapper = styled.article`
     gap: 1rem;
   }
 
-  /* @media (min-width: 1100px) {
-    .box-container {
-      top: 10rem;
-      right: 0;
-      flex-direction: column;
-    }
-  } */
-
   .box-container > div {
     display: flex;
     align-items: center;
@@ -104,10 +96,10 @@ const Wrapper = styled.article`
     box-shadow: var(--shadow-1);
   }
   .red {
-    background-color: red;
+    background-color: #ff3737;
   }
   .green {
-    background-color: green;
+    background-color: #006d00;
   }
   .text {
     color: var(--gray-500);

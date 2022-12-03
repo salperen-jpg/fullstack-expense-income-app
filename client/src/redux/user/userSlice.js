@@ -82,6 +82,10 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.user = user;
     },
+    [getUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
   },
 });
 

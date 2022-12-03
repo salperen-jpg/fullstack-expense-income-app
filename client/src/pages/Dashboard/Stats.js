@@ -23,7 +23,7 @@ const Stats = () => {
       <SectionTitle title='Stats' />
       <div className='footer'>
         <StatsOverview expenses={numOfExpenses} incomes={numOfIncomes} />
-        <Chart stats={stats} />
+        {numOfExpenses + numOfIncomes !== 0 && <Chart stats={stats} />}
       </div>
     </Wrapper>
   );
@@ -32,15 +32,7 @@ const Stats = () => {
 const Wrapper = styled.section`
   .footer {
     display: grid;
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* gap: 1rem; */
-  }
-  @media (min-width: 992px) {
-    .footer {
-      /* grid-template-columns: 1fr 1fr;
-      justify-content: center; */
-    }
+    gap: 3rem;
   }
 `;
 export default Stats;
