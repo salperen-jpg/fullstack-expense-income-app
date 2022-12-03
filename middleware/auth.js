@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
   if (!token) {
     throw new UnAuthenticated('Authentication invalid');
   }
-  console.log('Coming from auth');
+
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = { userId: payload.userId };

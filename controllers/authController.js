@@ -85,7 +85,8 @@ const getUser = async (req, res, next) => {
 };
 
 const logOutUser = async (req, res, next) => {
-  res.cookie('token', 'logout', {
+  console.log('I');
+  res.cookie('token', '', {
     httpOnly: true,
     expires: new Date(Date.now()),
   });
