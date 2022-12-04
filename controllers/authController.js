@@ -79,13 +79,10 @@ const updateUser = async (req, res) => {
 
 const getUser = async (req, res, next) => {
   const currentUser = await User.findOne({ _id: req.user.userId });
-  console.log('hi');
-  // console.log('I am sending');
   res.status(StatusCodes.OK).json({ user: currentUser });
 };
 
 const logOutUser = async (req, res, next) => {
-  console.log('I');
   res.cookie('token', '', {
     httpOnly: true,
     expires: new Date(Date.now()),

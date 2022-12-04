@@ -6,7 +6,7 @@ const ListView = ({ balances }) => {
   return (
     <Wrapper>
       {balances.map((balance) => {
-        const { name, description, _id, amount, typeFilter } = balance;
+        const { name, description, amount, typeFilter } = balance;
         return (
           <article key={balance._id}>
             <header>

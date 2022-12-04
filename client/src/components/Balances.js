@@ -13,10 +13,12 @@ const Balances = () => {
 
   React.useEffect(() => {
     dispatch(getAmount());
+    // eslint-disable-next-line
   }, []);
 
   React.useEffect(() => {
     dispatch(getAllBalances());
+    // eslint-disable-next-line
   }, [filters]);
 
   if (isLoading) {

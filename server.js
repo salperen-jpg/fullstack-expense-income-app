@@ -10,6 +10,10 @@ import helmet from 'helmet';
 import xss from 'xss-clean';
 import mongoSanitize from 'express-mongo-sanitize';
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+
 // MIDDLEWARE IMPORTS
 
 import notFound from './middleware/not-found.js';
@@ -20,10 +24,12 @@ import errorHandlerMiddleware from './middleware/error-handler.js';
 import authRouter from './routes/authRoutes.js';
 import balanceRouter from './routes/balanceRoutes.js';
 import cookieParser from 'cookie-parser';
-// Routes
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // middleware for json
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(helmet()); //seceres headers
 app.use(xss()); // sanitize the input => cross side atacks
 app.use(mongoSanitize()); // sanitazing for mongo
@@ -36,6 +42,10 @@ if (process.env.NODE_ENV !== 'production') {
 // ROUTES
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/balances', balanceRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build/index.html'));
+});
 
 // MIDDLEWARES
 app.use(notFound);

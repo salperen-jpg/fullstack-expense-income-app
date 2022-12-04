@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import styled from 'styled-components';
 
 const Chart = ({ stats }) => {

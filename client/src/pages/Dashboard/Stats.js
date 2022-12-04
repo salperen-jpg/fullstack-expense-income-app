@@ -12,6 +12,7 @@ const Stats = () => {
 
   React.useEffect(() => {
     dispatch(getStats());
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {
@@ -32,7 +33,7 @@ const Stats = () => {
 const Wrapper = styled.section`
   .footer {
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
   }
 `;
 export default Stats;

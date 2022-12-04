@@ -120,7 +120,6 @@ const balanceSlice = createSlice({
     },
     [createBalance.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      console.log('I am here');
       toast.success('Balance created...');
     },
     [createBalance.rejected]: (state, { payload }) => {
